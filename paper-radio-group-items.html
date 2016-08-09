@@ -49,7 +49,7 @@ Example:
         selected="{{value}}" 
         attr-for-selected="name"
     >
-        <template is="dom-repeat" id="dropdownRepeat" items="{{items}}" filter="{{filter}}">
+        <template is="dom-repeat" id="repeat" items="{{items}}" filter="{{filter}}">
           <paper-radio-button name="{{_computeItemValue(item)}}">[[_computeItemLabel(item)]]</paper-radio-button>
         </template>
     </paper-radio-group>

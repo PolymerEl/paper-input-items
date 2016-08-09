@@ -1,29 +1,54 @@
 <!doctype html>
 <html>
-  <head>
-    <title>paper-input-items demo</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+<head>
+  <title>paper-input-items demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../paper-dropdown-menu-items.html">
+  <link rel="import" href="../paper-radio-group-items.html">
+  <style is="custom-style" include="demo-pages-shared-styles">
 
-    <link rel="import" href="../paper-input-items.html">
+  </style>
+</head>
 
-    <style is="custom-style" include="demo-pages-shared-styles">
-    </style>
-  </head>
-  <body>
-
-    <div class="vertical-section-container centered">
-      <h3>Basic paper-input-items Demo</h3>
-      <demo-snippet>
-        <template>
-          <paper-input-items></paper-input-items>
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic paper-input-items Demo</h3>
+    <h4>paper-firebase-dropdown</h4>
+    <p>Use firebase collection items as paper-dropdown-menu options</p>
+    <demo-snippet class="centered-demo">
+      <template>
+        <template is="dom-bind" id="app">
+          <paper-dropdown-menu-items id="dropdown" label="choose Division" value="{{value}}" label-accessor="label">
+          </paper-dropdown-menu-items>
+          <paper-radio-group-items id="radio" label="choose Division" value="{{value}}" label-accessor="label">
+          </paper-radio-group-items>
         </template>
-      </demo-snippet>
-    </div>
+      </template>
+    </demo-snippet>
+  </div>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    app = document.querySelector('#app');
 
-  </body>
+    var items = [{
+      label: 'first',
+      key: 'first'
+    }, {
+      label: 'second',
+      key: 'second'
+    }, {
+      label: 'third',
+      key: 'third'
+    }];
+    
+    app.$.dropdown.items = app.$.radio.items = items;
+  });
+  </script>
+</body>
+
 </html>

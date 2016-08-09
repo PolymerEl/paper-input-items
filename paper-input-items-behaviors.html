@@ -8,21 +8,26 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="paper-input-items-behaviors.html">
+<link rel="import" href="paper-input-behaviors.html">
 <script>
 /** @polymerBehavior */
+(function() {
+  'use strict';
 
-Polymer.paperInputBehaviors = Polymer.paperInputBehaviors || {};
+  Polymer.paperInputBehaviors = Polymer.paperInputBehaviors || {};
 
-var impl = {
-  properties: {
+  var behavior = {
+    properties: {
       /**
        * An ordered array of data items produced by the current Firebase Query
        * instance.
        */
       items: {
         type: Array,
-        notify: true
+        notify: true,
+        value: function() {
+          return [];
+        }
       },
 
       /**
@@ -32,7 +37,23 @@ var impl = {
         type: String,
         notify: true
       },
-      
+
+      /**
+       * `keylName` the name to lookup for the key
+       */
+      keyName: {
+        type: String,
+        value: 'key'
+      },
+
+      /**
+       * `labelName` the name to lookup for the label
+       */
+      labelName: {
+        type: String,
+        value: 'key'
+      },
+
       /**
        * `keyAccessorFn`, provide a new function to retrieve item key. 
        * example : function(item) {return item.__myNewKey__;}
@@ -41,7 +62,10 @@ var impl = {
         type: Function,
         observer: '_keyAccessorFnChanged',
         value: function() {
-          return function(item) {return item.__firebaseKey__;};
+          // return function(item) {return item.__firebaseKey__;};
+          return function(item) {
+            return item[this.keyName];
+          };
         }
       },
 
@@ -52,40 +76,46 @@ var impl = {
         type: Function,
         observer: '_labelAccessorFnChanged',
         value: function() {
-          return function(item) {return item.label;};
+          return function(item) {
+             return item[this.labelName];
+          };
         }
       },
 
       /**
        * `filter` function passed to `<template is="dom-repeat">`
        */
-      filter: Function ,
+      filter: Function,
 
       readonly: Boolean
-    
+
     },
 
     _keyAccessorFnChanged: function(fn) {
       var dataHost = this;
       this._computeItemValue = fn && (typeof fn === 'function' ? fn :
-        function() { return dataHost[fn].apply(dataHost, arguments); });
-      this.$.dropdownRepeat._debounceTemplate(this.$.dropdownRepeat._render);
-      
+        function() {
+          return dataHost[fn].apply(dataHost, arguments);
+        });
+      this.$.repeat._debounceTemplate(this.$.repeat._render);
+
     },
-    
+
     _labelAccessorFnChanged: function(fn) {
       var dataHost = this;
       this._computeItemLabel = fn && (typeof fn === 'function' ? fn :
-        function() { return dataHost[fn].apply(dataHost, arguments); });
-      this.$.dropdownRepeat._debounceTemplate(this.$.dropdownRepeat._render);
-      
-    },
-};
+        function() {
+          return dataHost[fn].apply(dataHost, arguments);
+        });
+      this.$.repeat._debounceTemplate(this.$.repeat._render);
 
-Polymer.paperInputBehaviors.items = [
-  Polymer.paperInputBehaviors.input,
-  impl 
-];
+    }
+  };
 
-};
+  Polymer.paperInputBehaviors.items = [
+    Polymer.paperInputBehaviors.input,
+    behavior
+  ];
+
+})();
 </script>
