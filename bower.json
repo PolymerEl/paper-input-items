@@ -1,10 +1,10 @@
 {
   "name": "paper-input-items",
   "description": "paper input with template-repeat (e.g. paper-dropdown-menu, paper-radio-group)",
-  "main": "paper-input-items.html",
+  "main": "paper-dropdown-menu-items.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerEl/paper-input-items/",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "authors": [
     "christophe.geiser@e-smile.org"
   ],
@@ -23,6 +23,7 @@
     "web-component",
     "web-components",
     "dropdown",
+    "paper-radio-group",
     "paper-dropdown-menu",
     "material design",
     "polymer",
