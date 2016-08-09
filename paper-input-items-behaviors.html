@@ -41,16 +41,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * `keylName` the name to lookup for the key
        */
-      keyName: {
+      idAccessor: {
         type: String,
         notify: true,
         value: 'key'
       },
 
       /**
-       * `labelName` the name to lookup for the label
+       * `labelAccessor` the name to lookup for the label
        */
-      labelName: {
+      labelAccessor: {
         type: String,
         notify: true,
         value: 'label'
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         value: function() {
           // return function(item) {return item.__firebaseKey__;};
           return function(item) {
-            return item[this.keyName];
+            return item[this.idAccessor];
           };
         }
       },
@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         observer: '_labelAccessorFnChanged',
         value: function() {
           return function(item) {
-             return item[this.labelName];
+             return item[this.labelAccessor];
           };
         }
       },
