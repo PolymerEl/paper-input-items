@@ -33,16 +33,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * `value` for this element. It is derived from passing collection item to _computeItemValue function
        */
-      value: {
-        type: String,
-        notify: true
-      },
+      // value: {
+      //   type: String,
+      //   notify: true
+      // },
 
       /**
        * `keylName` the name to lookup for the key
        */
       keyName: {
         type: String,
+        notify: true,
         value: 'key'
       },
 
@@ -51,7 +52,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       labelName: {
         type: String,
-        value: 'key'
+        notify: true,
+        value: 'label'
       },
 
       /**
@@ -97,8 +99,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         function() {
           return dataHost[fn].apply(dataHost, arguments);
         });
-      this.$.repeat._debounceTemplate(this.$.repeat._render);
-
+      if(this.$repeat) {
+        this.$.repeat._debounceTemplate(this.$.repeat._render);
+      }
     },
 
     _labelAccessorFnChanged: function(fn) {
@@ -107,7 +110,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         function() {
           return dataHost[fn].apply(dataHost, arguments);
         });
-      this.$.repeat._debounceTemplate(this.$.repeat._render);
+      if(this.$repeat) {
+        this.$.repeat._debounceTemplate(this.$.repeat._render);
+      }
 
     }
   };
