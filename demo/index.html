@@ -10,6 +10,7 @@
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../paper-dropdown-menu-items.html">
   <link rel="import" href="../paper-radio-group-items.html">
+  <link rel="import" href="../lookup-accessor.html">
   <style is="custom-style" include="demo-pages-shared-styles">
 
   </style>
@@ -23,9 +24,11 @@
     <demo-snippet class="centered-demo">
       <template>
         <template is="dom-bind" id="app">
-          <paper-dropdown-menu-items id="dropdown" label="choose Division" value="{{value}}" label-accessor="label">
+          <lookup-accessor path="label" accessor="{{labelAccessor}}"></lookup-accessor>
+          <lookup-accessor path="key" accessor="{{valueAccessor}}"></lookup-accessor>
+          <paper-dropdown-menu-items id="dropdown" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
           </paper-dropdown-menu-items>
-          <paper-radio-group-items id="radio" label="choose Division" value="{{value}}" label-accessor="label">
+          <paper-radio-group-items id="radio" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
           </paper-radio-group-items>
         </template>
       </template>
