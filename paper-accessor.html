@@ -1,0 +1,42 @@
+<link rel="import" href="../polymer/polymer.html">
+<!--
+`lookup-accessor`
+
+-->
+<dom-module id="lookup-accessor">
+  <script>
+  Polymer({
+
+    is: 'lookup-accessor',
+
+    properties: {
+
+      /**
+       * `accessor` the accessor function  (e.g. function (item) {return  iten.label;})
+       */
+      accessor: {
+        type: Function,
+        notify: true,
+      },
+
+      /**
+       * `accessor` the path from which the accessor function is built
+       */
+      path: {
+        type: String,
+      }
+    },
+
+    observers: [
+      '_observePath(path)'
+    ],
+
+    _observePath: function(path) {
+      if (path) {
+        this.set('accessor', new Function('item', 'return item.' + path));
+      }
+    }
+
+  });
+  </script>
+</dom-module>

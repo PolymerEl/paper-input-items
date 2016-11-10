@@ -48,7 +48,7 @@ Example:
     >
        <paper-menu class="dropdown-content" selected="{{value}}" attr-for-selected="name" >
         <template is="dom-repeat" id="repeat" items="[[items]]" filter="{{filter}}">
-          <paper-item name="{{_computeItemValue(item)}}">[[_computeItemLabel(item)]]</paper-item>
+          <paper-item name="[[_computeItemValue(item)]]">[[_computeItemLabel(item)]]</paper-item>
         </template>
       </paper-menu>
     </paper-dropdown-menu>

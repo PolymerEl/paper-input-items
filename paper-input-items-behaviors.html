@@ -43,46 +43,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       idAccessor: {
         type: String,
-        notify: true,
+        // notify: true,
         value: 'key'
       },
+
+      _computeItemLabel: {
+        type: Function,
+        observe: '_observeFunctionChange'
+      },
+      /**
+       * `keyAccessorFn`, provide a new function to retrieve item key. 
+       * example : function(item) {return item.__myNewKey__;}
+       */
+      // keyAccessorFn: {
+      //   type: Function,
+      //   observer: '_keyAccessorFnChanged',
+      //   // value: function() {
+      //   //   // return function(item) {return item.__firebaseKey__;};
+      //   //   return function(item) {
+      //   //     return item[this.idAccessor];
+      //   //   };
+      //   // }
+      // },
+
+
 
       /**
        * `labelAccessor` the name to lookup for the label
        */
       labelAccessor: {
         type: String,
-        notify: true,
+        // notify: true,
         value: 'label'
       },
 
-      /**
-       * `keyAccessorFn`, provide a new function to retrieve item key. 
-       * example : function(item) {return item.__myNewKey__;}
-       */
-      keyAccessorFn: {
+      _computeItemValue: {
         type: Function,
-        observer: '_keyAccessorFnChanged',
-        value: function() {
-          // return function(item) {return item.__firebaseKey__;};
-          return function(item) {
-            return item[this.idAccessor];
-          };
-        }
+        observe: '_observeFunctionChange'
       },
 
       /**
        * `labelAccessorFn` key for retrieving the `label` from item data object
        */
-      labelAccessorFn: {
-        type: Function,
-        observer: '_labelAccessorFnChanged',
-        value: function() {
-          return function(item) {
-             return item[this.labelAccessor];
-          };
-        }
-      },
+      // labelAccessorFn: {
+      //   type: Function,
+      //   observer: '_labelAccessorFnChanged',
+      //   // value: function() {
+      //   //   return function(item) {
+      //   //      return item[this.labelAccessor];
+      //   //   };
+      //   // }
+      // },
 
       /**
        * `filter` function passed to `<template is="dom-repeat">`
@@ -93,28 +104,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     },
 
-    _keyAccessorFnChanged: function(fn) {
-      var dataHost = this;
-      this._computeItemValue = fn && (typeof fn === 'function' ? fn :
-        function() {
-          return dataHost[fn].apply(dataHost, arguments);
+    observers: [
+      '__observeAccessor(idAccessor, "_computeItemValue")',
+      '__observeAccessor(labelAccessor, "_computeItemLabel")'
+    ],
+    _observeFunctionChange: function() {
+      if (this.$repeat) {
+        this.debounce('debounceTemplate', function() {
+          this.$.repeat._debounceTemplate(this.$.repeat._render);
         });
-      if(this.$repeat) {
-        this.$.repeat._debounceTemplate(this.$.repeat._render);
       }
     },
 
-    _labelAccessorFnChanged: function(fn) {
-      var dataHost = this;
-      this._computeItemLabel = fn && (typeof fn === 'function' ? fn :
-        function() {
-          return dataHost[fn].apply(dataHost, arguments);
-        });
-      if(this.$repeat) {
-        this.$.repeat._debounceTemplate(this.$.repeat._render);
+    __observeAccessor: function(path, target) {
+      if (path && target) {
+        this.set(target, new Function('item', 'return item.' + path ));
       }
-
     }
+
+    // _keyAccessorFnChanged: function(fn) {
+    //   var dataHost = this;
+    //   this._computeItemValue = fn && (typeof fn === 'function' ? fn :
+    //     function() {
+    //       return dataHost[fn].apply(dataHost, arguments);
+    //     });
+    //   if(this.$repeat) {
+    //     this.$.repeat._debounceTemplate(this.$.repeat._render);
+    //   }
+    // },
+
+    // _labelAccessorFnChanged: function(fn) {
+    //   var dataHost = this;
+    //   this._computeItemLabel = fn && (typeof fn === 'function' ? fn :
+    //     function() {
+    //       return dataHost[fn].apply(dataHost, arguments);
+    //     });
+    //   if(this.$repeat) {
+    //     this.$.repeat._debounceTemplate(this.$.repeat._render);
+    //   }
+
+    // }
   };
 
   Polymer.paperInputBehaviors.items = [
