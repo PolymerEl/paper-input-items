@@ -1,38 +1,30 @@
-# \<paper-input-items\>
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://beta.webcomponents.org/element/polymerEl/paper-input-items)
 
-paper input with template-repeat (e.g. paper-dropdown-menu, paper-radio-group)
+# \<paper-locale-paper-input-items\>
 
-## Install the Polymer-CLI
+`<paper-input-items>` is a customizable paper input wrapper to facilitate the use template-repeat paper-inputs (e.g. paper-dropdown-menu, paper-radio-group)
+ 
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+Example Usage:
 
-## Viewing Your Application
+<!--
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="paper-dropdown-menu-items.html">
+    <link rel="import" href="paper-radio-group-items.html">
+    <link rel="import" href="lookup-accessor.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+	<lookup-accessor path="label" accessor="{{labelAccessor}}"></lookup-accessor>
+ 	<lookup-accessor path="key" accessor="{{valueAccessor}}"></lookup-accessor>
+  <paper-dropdown-menu-items id="dropdown" label="dropdown label" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-dropdown-menu-items>
+  <paper-radio-group-items id="radio" label="radio label" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-radio-group-items>
 
 ```
-$ polymer serve
-```
 
-## Building Your Application
 
-```
-$ polymer build
-```
-
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.

@@ -1,0 +1,70 @@
+<link rel="import" href="../polymer/polymer.html">
+<!--
+`lookup-accessor`
+
+-->
+<dom-module id="lookup-accessor">
+  <script>
+  Polymer({
+
+    is: 'lookup-accessor',
+
+    properties: {
+
+      /**
+       * `accessor` the accessor function  (e.g. function (item) {return  iten.label;})
+       */
+      accessor: {
+        type: Function,
+        notify: true,
+      },
+
+      /**
+       * `accessor` the path from which the accessor function is built
+       */
+      path: {
+        type: String,
+      },
+
+      subPath: {
+        type: Boolean,
+        value: false
+      }
+
+    },
+
+    observers: [
+      '_observePath(path, subPath)'
+    ],
+
+    _observePath: function(path, subPath) {
+      var split = path.split('.');
+
+      var fn = subPath ? function(item, k) {
+        var ret = split.reduce(function(prev, curr) {
+          return prev && prev.base ? prev.base[curr] : prev ? prev[curr] : undefined;
+          // return prev ? prev[curr] : undefined;
+        }, item);
+        if (ret) {
+          return ret[k];
+        }
+      } : function(item) {
+        return split.reduce(function(prev, curr) {
+          return prev && prev.base ? prev.base[curr] : prev ? prev[curr] : undefined;
+        }, item);
+      };
+      //we keep the path so that we can check how the accessor function is being built (e.g. when we have a change in data table)
+      fn.path = split;
+      this.set('accessor', fn);
+
+      // if (path) {
+      //   if (subPath) {
+      //     return this.set('accessor', new Function('item', 'k', 'return item.' + path + '[k];'));
+      //   }
+      //   this.set('accessor', new Function('item', 'return item.' + path + ';'));
+      // }
+    }
+
+  });
+  </script>
+</dom-module>

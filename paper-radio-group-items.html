@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../paper-input-wrapper/paper-input-wrapper.html">
+<link rel="import" href="lookup-accessor.html">
 <!--
 A paper-menu-dropdown using firebase-collection items as menu options
 
@@ -41,6 +42,7 @@ Example:
         always-float-label="[[alwaysFloatLabel]]"
         >
     <paper-radio-group
+        id="selector"
         readonly="[[readonly]]"
         no-animations="[[noAnimations]]"
         horizontal-align="[[horizontalAlign]]"
@@ -52,6 +54,7 @@ Example:
           <paper-radio-button name="{{valueAccessor(item)}}">[[labelAccessor(item)]]</paper-radio-button>
         </template>
     </paper-radio-group>
+    <content></content>
   </template>
   <script>
   Polymer({
