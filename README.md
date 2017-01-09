@@ -20,10 +20,8 @@ Example Usage:
 ```
 -->
 ```html
-	<lookup-accessor path="label" accessor="{{labelAccessor}}"></lookup-accessor>
- 	<lookup-accessor path="key" accessor="{{valueAccessor}}"></lookup-accessor>
-  <paper-dropdown-menu-items id="dropdown" label="dropdown label" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-dropdown-menu-items>
-  <paper-radio-group-items id="radio" label="radio label" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-radio-group-items>
+  <paper-dropdown-menu-items id="dropdown" label="dropdown label"  items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-dropdown-menu-items>
+  <paper-radio-group-items id="radio" label="radio label" items='[{"label":"first","key":"first"},{"label":"second","key":"second"},{"label":"third","key":"third"}]'></paper-radio-group-items>
 
 ```
 
