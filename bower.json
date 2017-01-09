@@ -4,7 +4,7 @@
   "main": "paper-input-items-import.html",
   "license": "https://github.com/PolymerEl/LICENSE",
   "homepage": "https://github.com/PolymerEl/paper-input-items",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "authors": [
     "christophe.geiser@e-smile.org"
   ],
@@ -15,18 +15,18 @@
     "paper-radio-group": "PolymerElements/paper-radio-group#^1.2.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^1.2.1",
     "paper-menu": "PolymerElements/paper-menu#^1.2.2",
-    "paper-item": "PolymerElements/paper-item#^1.2.1",
+    "paper-item": "PolymerElements/paper-item#^1.2.1"
   },
   "keywords": [
     "web-component",
     "web-components",
     "dropdown",
+    "input",
     "paper-radio-group",
     "paper-dropdown-menu",
     "material design",
     "form",
-    "polymer",
-    "firebase",
+    "polymer"
   ],
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
