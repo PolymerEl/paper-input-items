@@ -72,6 +72,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       '__observeAccessor(valueAccessor.changed)'
     ],
 
+    listeners: {
+      'item-label-changed': '__onLabelChanged'
+    },
+    
+    /* 
+     * `__onLabelChanged` usefull when the label os a selectedItem changes. Without this function (triggered by `item-label-changed`), the visible value label does not update.  
+     */
+    __onLabelChanged: function(e) {
+      e.stopPropagation();
+      this.refresh();
+    },
+
     //call doRefresh to refresh the label  (for instance when db lookup have not been uploaded yet)
     refresh: function() {
        this.$.selector._selectedItemChanged(this.$.selector.selectedItem);

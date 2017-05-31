@@ -10,7 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="paper-input-items-behaviors.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<!-- <link rel="import" href="../paper-menu/paper-menu.html"> -->
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="lookup-accessor.html">
 <!--
@@ -28,31 +29,17 @@ Example:
       display: block;
       /*box-sizing: border-box;*/
     }
-/*    #filterCt {
+    /*    #filterCt {
       color: var(--default-primary-color);
       padding: 2px 8;
     }*/
     </style>
-    
-    <paper-dropdown-menu
-        id="selector"
-        selected-item="[[value]]"
-        label="[[label]]"
-        readonly="[[readonly]]"
-        placeholder="[[placeholder]]"
-        error-message="[[errorMessage]]"
-        opened="[[opened]]"
-        no-label-float="[[noLabelFloat]]"
-        always-float-label="[[alwaysFloatLabel]]"
-        no-animations="[[noAnimations]]"
-        horizontal-align="[[horizontalAlign]]"
-        vertical-align="[[verticalAlign]]"
-    >
-       <paper-menu class="dropdown-content" selected="{{value}}" attr-for-selected="name" >
-        <template is="dom-repeat" id="repeat" items="[[items]]" filter="{{filter}}">
+    <paper-dropdown-menu id="selector" selected-item="[[value]]" label="[[label]]" readonly="[[readonly]]" placeholder="[[placeholder]]" error-message="[[errorMessage]]" opened="[[opened]]" no-label-float="[[noLabelFloat]]" always-float-label="[[alwaysFloatLabel]]" no-animations="[[noAnimations]]" horizontal-align="[[horizontalAlign]]" vertical-align="[[verticalAlign]]">
+      <paper-listbox class="dropdown-content" selected="{{value}}" attr-for-selected="name">
+        <template is="dom-repeat" id="repeat" items="{{items}}" filter="{{filter}}">
           <paper-item name="[[valueAccessor(item)]]">[[labelAccessor(item.*)]]</paper-item>
         </template>
-      </paper-menu>
+      </paper-listbox>
     </paper-dropdown-menu>
     <content></content>
   </template>
@@ -62,9 +49,7 @@ Example:
 
     behaviors: [
       Polymer.paperInputBehaviors.items
-    ],
-
-
+    ]
 
   });
   </script>
