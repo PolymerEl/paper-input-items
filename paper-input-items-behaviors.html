@@ -10,103 +10,100 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="paper-input-behaviors.html">
 <script>
-/** @polymerBehavior */
-(function() {
-  'use strict';
+window.Polymer = window.Polymer || {};
+Polymer.behaviors = Polymer.behaviors || {};
+/* @polymerBehavior Polymer.behaviors.paperInputItemsImpl */
+Polymer.behaviors.paperInputItemsImpl = {
 
-  Polymer.paperInputBehaviors = Polymer.paperInputBehaviors || {};
-
-  var behavior = {
-    properties: {
-      /**
-       * An ordered array of data items produced by the current Firebase Query
-       * instance.
-       */
-      items: {
-        type: Array,
-        notify: true,
-        value: function() {
-          return [];
-        }
-      },
-
-      /**
-       * `valueAccessor` the function for accessing value
-       */
-      valueAccessor: {
-        type: String,
-        // observe: '__observeFunctionChange',
-        value: function() {
-          return function(item) {
-            return item.value;
-          };
-        }
-
-      },
-
-      /**
-       * `labelAccessor` the function for accessing label
-       */
-      labelAccessor: {
-        type: Function,
-        // observe: '__observeFunctionChange',
-        value: function() {
-          return function(item) {
-            item = item.base || item;
-            return item.label;
-          };
-        }
-      },
-
-      /**
-       * `filter` function passed to `<template is="dom-repeat">`
-       */
-      filter: Function,
-
-      readonly: Boolean
-
-    },
-
-    observers: [
-      '__observeAccessor(labelAccessor.changed)',
-      '__observeAccessor(valueAccessor.changed)'
-    ],
-
-    listeners: {
-      'item-label-changed': '__onLabelChanged'
-    },
-    
-    /* 
-     * `__onLabelChanged` usefull when the label os a selectedItem changes. Without this function (triggered by `item-label-changed`), the visible value label does not update.  
+  properties: {
+    /**
+     * An ordered array of data items produced by the current Firebase Query
+     * instance.
      */
-    __onLabelChanged: function(e) {
-      e.stopPropagation();
-      this.refresh();
-    },
-
-    //call doRefresh to refresh the label  (for instance when db lookup have not been uploaded yet)
-    refresh: function() {
-       this.$.selector._selectedItemChanged(this.$.selector.selectedItem);
-    },
-
-    __observeAccessor: function(changed) {
-      this.__observeFunctionChange();
-    },
-
-    __observeFunctionChange: function() {
-      if (this.$.repeat) {
-        this.debounce('debounceTemplate', function() {
-          this.$.repeat._debounceTemplate(this.$.repeat._render);
-        }, 100);
+    items: {
+      type: Array,
+      notify: true,
+      value: function() {
+        return [];
       }
+    },
+
+    /**
+     * `valueAccessor` the function for accessing value
+     */
+    valueAccessor: {
+      type: String,
+      // observe: '__observeFunctionChange',
+      value: function() {
+        return function(item) {
+          return item.value;
+        };
+      }
+
+    },
+
+    /**
+     * `labelAccessor` the function for accessing label
+     */
+    labelAccessor: {
+      type: Function,
+      // observe: '__observeFunctionChange',
+      value: function() {
+        return function(item) {
+          item = item.base || item;
+          return item.label;
+        };
+      }
+    },
+
+    /**
+     * `filter` function passed to `<template is="dom-repeat">`
+     */
+    filter: Function,
+
+    readonly: Boolean
+
+  },
+
+  observers: [
+    '__observeAccessor(labelAccessor.changed)',
+    '__observeAccessor(valueAccessor.changed)'
+  ],
+
+  listeners: {
+    'item-label-changed': '__onLabelChanged'
+  },
+
+  /* 
+   * `__onLabelChanged` usefull when the label os a selectedItem changes. Without this function (triggered by `item-label-changed`), the visible value label does not update.  
+   */
+  __onLabelChanged: function(e) {
+    e.stopPropagation();
+    this.refresh();
+  },
+
+  //call doRefresh to refresh the label  (for instance when db lookup have not been uploaded yet)
+  refresh: function() {
+    this.$.selector._selectedItemChanged(this.$.selector.selectedItem);
+  },
+
+  __observeAccessor: function(changed) {
+    this.__observeFunctionChange();
+  },
+
+  __observeFunctionChange: function() {
+    if (this.$.repeat) {
+      this.debounce('debounceTemplate', function() {
+        this.$.repeat._debounceTemplate(this.$.repeat._render);
+      }, 100);
     }
+  }
 
-  };
+};
 
-  Polymer.paperInputBehaviors.items = [
-    Polymer.paperInputBehaviors.input,
-    behavior
-  ];
-
-})();
+/* @polymerBehavior Polymer.behaviors.paperInputItems */
+Polymer.behaviors.paperInputItems = [
+  Polymer.behaviors.paperInput,
+  Polymer.behaviors.paperInputItemsImpl
+];
 </script>
