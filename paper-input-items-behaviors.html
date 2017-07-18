@@ -28,46 +28,61 @@ Polymer.behaviors.paperInputItemsImpl = {
       }
     },
 
+    /* 
+     * `valuePath` 
+     */
+    valuePath: {
+      type: String,
+      value: 'value',
+      observer: '__observeValuePath'
+    },
+
     /**
      * `valueAccessor` the function for accessing value
      */
     valueAccessor: {
-      type: String,
-      // observe: '__observeFunctionChange',
-      value: function() {
-        return function(item) {
-          return item.value;
-        };
-      }
+      type: Function
+    },
 
+    /* 
+     * `labelPath` 
+     */
+    labelPath: {
+      type: String,
+      value: 'label',
+      observer: '__observeLabelPath'
     },
 
     /**
      * `labelAccessor` the function for accessing label
      */
     labelAccessor: {
-      type: Function,
-      // observe: '__observeFunctionChange',
-      value: function() {
-        return function(item) {
-          item = item.base || item;
-          return item.label;
-        };
-      }
+      type: Function
     },
 
     /**
      * `filter` function passed to `<template is="dom-repeat">`
      */
-    filter: Function,
+    filter: {
+      type: Function,
+    },
 
-    readonly: Boolean
+    /* 
+     * `observe` fields to be observed in dom-repeat
+     */
+    observe: {
+      type: String,
+    },
+
+    readonly: {
+      type: Boolean
+    }
 
   },
 
   observers: [
-    '__observeAccessor(labelAccessor.changed)',
-    '__observeAccessor(valueAccessor.changed)'
+    '__observeAccessor(labelAccessor, labelAccessor.changed)',
+    '__observeAccessor(valueAccessor, valueAccessor.changed)'
   ],
 
   listeners: {
@@ -88,7 +103,9 @@ Polymer.behaviors.paperInputItemsImpl = {
   },
 
   __observeAccessor: function(changed) {
-    this.__observeFunctionChange();
+    this.debounce('observe-accessor-input-items', function() {
+      this.__observeFunctionChange();
+    }, 80);
   },
 
   __observeFunctionChange: function() {
@@ -96,6 +113,28 @@ Polymer.behaviors.paperInputItemsImpl = {
       this.debounce('debounceTemplate', function() {
         this.$.repeat._debounceTemplate(this.$.repeat._render);
       }, 100);
+    }
+  },
+
+  __observeLabelPath: function(path, old) {
+    if (path) {
+      this.labelAccessor = this.__computeAccessor(path)
+    }
+  },
+
+  __observeValuePath: function(path, old) {
+    if (path) {
+      this.valueAccessor = this.__computeAccessor(path)
+    }
+  },
+
+  __computeAccessor: function(path) {
+    if (path) {
+      var me = this;
+      return function(item) {
+        item = item.base || item;
+        return me.get(path, item);
+      };
     }
   }
 

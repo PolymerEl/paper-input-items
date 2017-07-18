@@ -36,7 +36,7 @@ Example:
     </style>
     <paper-dropdown-menu id="selector" selected-item="[[value]]" label="[[label]]" readonly="[[readonly]]" placeholder="[[placeholder]]" error-message="[[errorMessage]]" opened="[[opened]]" no-label-float="[[noLabelFloat]]" always-float-label="[[alwaysFloatLabel]]" no-animations="[[noAnimations]]" horizontal-align="[[horizontalAlign]]" vertical-align="[[verticalAlign]]">
       <paper-listbox class="dropdown-content" selected="{{value}}" attr-for-selected="name">
-        <template is="dom-repeat" id="repeat" items="{{items}}" filter="{{filter}}">
+        <template is="dom-repeat" id="repeat" items="{{items}}" filter="[[filter]]" observe="[[observe]]">
           <paper-item name="[[valueAccessor(item)]]">[[labelAccessor(item.*)]]</paper-item>
         </template>
       </paper-listbox>
@@ -48,9 +48,20 @@ Example:
     is: 'paper-dropdown-menu-items',
 
     behaviors: [
-      Polymer.behaviors.paperInputItems    
+      Polymer.behaviors.paperInputItems
       // Polymer.paperInputBehaviors.items
-    ]
+    ],
+
+    properties: {
+      /**
+       * True if the dropdown is open. Otherwise, false.
+       */
+      opened: {
+        type: Boolean,
+        notify: true,
+        value: false
+      },
+    }
 
   });
   </script>

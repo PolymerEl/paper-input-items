@@ -8,49 +8,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <script>
 window.Polymer = window.Polymer || {};
 Polymer.behaviors = Polymer.behaviors || {};
-/* @polymerBehavior Polymer.behaviors.paperInput */
-Polymer.behaviors.paperInput = {
+/* @polymerBehavior Polymer.behaviors.paperInputImpl */
+Polymer.behaviors.paperInputImpl = {
 
 
   properties: {
-    /**
-     * The derived "label" of the currently selected item. This value
-     * is the `label` property on the selected item if set, or else the
-     * trimmed text content of the selected item.
-     */
-    // selectedItemLabel: {
-    //   type: String,
-    //   notify: true,
-    //   readOnly: true
-    // },
 
-    /**
-     * The last selected item. An item is selected if the dropdown menu has
-     * a child with class `dropdown-content`, and that child triggers an
-     * `iron-select` event with the selected `item` in the `detail`.
-     *
-     * @type {?Object}
-     */
-    // selectedItem: {
-    //   type: Object,
-    //   notify: true,
-    //   readOnly: true
-    // },
-
-    /**
-     * The value for this element that will be used when submitting in
-     * a form. It is read only, and will always have the same value
-     * as `selectedItemLabel`.
-     */
-    value: {
-      type: String,
-      notify: true
-
-      // readOnly: true
-    },
 
     /**
      * The label for the dropdown.
@@ -74,15 +41,6 @@ Polymer.behaviors.paperInput = {
     },
 
     /**
-     * True if the dropdown is open. Otherwise, false.
-     */
-    opened: {
-      type: Boolean,
-      notify: true,
-      value: false
-    },
-
-    /**
      * Set to true to disable the floating label. Bind this to the
      * `<paper-input-container>`'s `noLabelFloat` property.
      */
@@ -99,6 +57,76 @@ Polymer.behaviors.paperInput = {
     alwaysFloatLabel: {
       type: Boolean,
       value: false
+    },
+
+    /**
+     * Set to true to disable this input. If you're using PaperInputBehavior to
+     * implement your own paper-input-like element, bind this to
+     * both the `<paper-input-container>`'s and the input's `disabled` property.
+     */
+    disabled: {
+      type: Boolean,
+      value: false
+    },
+
+    /**
+     * Returns true if the value is invalid. If you're using PaperInputBehavior to
+     * implement your own paper-input-like element, bind this to both the
+     * `<paper-input-container>`'s and the input's `invalid` property.
+     *
+     * If `autoValidate` is true, the `invalid` attribute is managed automatically,
+     * which can clobber attempts to manage it manually.
+     */
+    invalid: {
+      type: Boolean,
+      value: false,
+      notify: true
+    },
+
+    /**
+     * Set to true to prevent the user from entering invalid input. If you're
+     * using PaperInputBehavior to  implement your own paper-input-like element,
+     * bind this to `<input is="iron-input">`'s `preventInvalidInput` property.
+     */
+    preventInvalidInput: {
+      type: Boolean
+    },
+
+    /**
+     * Set this to specify the pattern allowed by `preventInvalidInput`. If
+     * you're using PaperInputBehavior to implement your own paper-input-like
+     * element, bind this to the `<input is="iron-input">`'s `allowedPattern`
+     * property.
+     */
+    allowedPattern: {
+      type: String
+    },
+
+    /**
+     * The type of the input. The supported types are `text`, `number` and `password`.
+     * If you're using PaperInputBehavior to implement your own paper-input-like element,
+     * bind this to the `<input is="iron-input">`'s `type` property.
+     */
+    type: {
+      type: String
+    },
+
+    /**
+     * The datalist of the input (if any). This should match the id of an existing `<datalist>`.
+     * If you're using PaperInputBehavior to implement your own paper-input-like
+     * element, bind this to the `<input is="iron-input">`'s `list` property.
+     */
+    list: {
+      type: String
+    },
+
+    /**
+     * A pattern to validate the `input` with. If you're using PaperInputBehavior to
+     * implement your own paper-input-like element, bind this to
+     * the `<input is="iron-input">`'s `pattern` property.
+     */
+    pattern: {
+      type: String
     },
 
     /**
@@ -128,6 +156,12 @@ Polymer.behaviors.paperInput = {
       value: 'top'
     }
   }
-
 };
+
+/* @polymerBehavior Polymer.behaviors.paperInput */
+Polymer.behaviors.paperInput = [
+  Polymer.IronFormElementBehavior,
+  Polymer.behaviors.paperInputImpl
+];
+
 </script>
