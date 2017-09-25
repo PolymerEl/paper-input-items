@@ -33,15 +33,22 @@ Polymer.behaviors.paperInputItemsImpl = {
      */
     valuePath: {
       type: String,
-      value: 'value',
-      observer: '__observeValuePath'
+      value: 'value'
     },
 
     /**
      * `valueAccessor` the function for accessing value
      */
     valueAccessor: {
-      type: Function
+      type: Function, 
+      observer: '__observeAccessor',
+      value: function() {
+        var me = this;
+        return function(item, path) {
+          item = item.base || item;
+          return me.get(path, item);
+        };
+      }
     },
 
     /* 
@@ -49,15 +56,22 @@ Polymer.behaviors.paperInputItemsImpl = {
      */
     labelPath: {
       type: String,
-      value: 'label',
-      observer: '__observeLabelPath'
+      value: 'label'
     },
 
     /**
      * `labelAccessor` the function for accessing label
      */
     labelAccessor: {
-      type: Function
+      type: Function,
+      observer: '__observeAccessor',
+      value: function() {
+        var me = this;
+        return function(item, path) {
+          item = item.base || item;
+          return me.get(path, item);
+        };
+      }
     },
 
     /**
@@ -65,6 +79,7 @@ Polymer.behaviors.paperInputItemsImpl = {
      */
     filter: {
       type: Function,
+
     },
 
     /* 
@@ -81,8 +96,8 @@ Polymer.behaviors.paperInputItemsImpl = {
   },
 
   observers: [
-    '__observeAccessor(labelAccessor, labelAccessor.changed)',
-    '__observeAccessor(valueAccessor, valueAccessor.changed)'
+    // '__observeAccessor(labelAccessor, labelAccessor.changed)',
+    // '__observeAccessor(valueAccessor, valueAccessor.changed)'
   ],
 
   listeners: {
@@ -102,41 +117,48 @@ Polymer.behaviors.paperInputItemsImpl = {
     this.$.selector._selectedItemChanged(this.$.selector.selectedItem);
   },
 
-  __observeAccessor: function(changed) {
-    this.debounce('observe-accessor-input-items', function() {
+  __observeAccessor: function(fn, old) {
+    if(old) {
       this.__observeFunctionChange();
-    }, 80);
+    }
   },
 
   __observeFunctionChange: function() {
     if (this.$.repeat) {
       this.debounce('debounceTemplate', function() {
         this.$.repeat._debounceTemplate(this.$.repeat._render);
+        // we have an issue when we set a value for the dropdown before items is received from client - the lookup text value does not refresh...
+        // if(this.value) {
+        //   this._pathEffector('value', this.value)
+        //   // this.notifyPath('value', this.value, true);
+        // }
       }, 100);
     }
   },
 
-  __observeLabelPath: function(path, old) {
-    if (path) {
-      this.labelAccessor = this.__computeAccessor(path)
-    }
-  },
+  // __observeLabelPath: function(path, old) {
+  //   if (path) {
+  //     this.labelAccessor = this.__computeAccessor(path);
+  //     // this.set('labelAccessor.changed',!this.labelAccessor.changed);
+  //   }
+  // },
 
-  __observeValuePath: function(path, old) {
-    if (path) {
-      this.valueAccessor = this.__computeAccessor(path)
-    }
-  },
+  // __observeValuePath: function(path, old) {
+  //   if (path) {
+  //     this.valueAccessor = this.__computeAccessor(path);
+  //     // this.set('valueAccessor.changed',!this.valueAccessor.changed);
+  //   }
+  // },
 
-  __computeAccessor: function(path) {
-    if (path) {
-      var me = this;
-      return function(item) {
-        item = item.base || item;
-        return me.get(path, item);
-      };
-    }
-  }
+  // __computeAccessor: function(path) {
+  //   if (path) {
+  //     var me = this;
+  //     return function(item) {
+  //       item = item.base || item;
+  //       return me.get(path, item);
+  //     };
+  //   }
+  // }
 
 };
 

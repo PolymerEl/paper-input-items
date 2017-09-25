@@ -51,7 +51,7 @@ Example:
         attr-for-selected="name"
     >
         <template is="dom-repeat" id="repeat" items="[[items]]" filter="{{filter}}">
-          <paper-radio-button name="{{valueAccessor(item)}}">[[labelAccessor(item)]]</paper-radio-button>
+          <paper-radio-button name="[[valueAccessor(item, valuePath)]]">[[labelAccessor(item.*, labelPath)]]</paper-radio-button>
         </template>
     </paper-radio-group>
     <content></content>
