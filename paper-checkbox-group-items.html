@@ -9,9 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="paper-input-items-behaviors.html">
-<link rel="import" href="../paper-radio-group/paper-radio-group.html">
-<link rel="import" href="../paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../paper-input-wrapper/paper-input-wrapper.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="lookup-accessor.html">
 <!--
 A paper-menu-dropdown using firebase-collection items as menu options
@@ -21,17 +21,13 @@ Example:
 @demo demo/index.html
 
 -->
-<dom-module id="paper-radio-group-items">
+<dom-module id="paper-checkbox-group-items">
   <template>
     <style>
     :host {
       display: block;
-      /*box-sizing: border-box;*/
     }
-/*    #filterCt {
-      color: var(--default-primary-color);
-      padding: 2px 8;
-    }*/
+
     </style>
     
     <paper-input-wrapper
@@ -41,25 +37,28 @@ Example:
         no-label-float="[[noLabelFloat]]"
         always-float-label="[[alwaysFloatLabel]]"
         >
-    <paper-radio-group
+    <iron-selector
         id="selector"
+        multi
+        selectable="paper-checkbox"
+        selected-attribute="checked"
+        selected-values="{{value}}"
         readonly="[[readonly]]"
         no-animations="[[noAnimations]]"
         horizontal-align="[[horizontalAlign]]"
         vertical-align="[[verticalAlign]]"
-        selected="{{value}}" 
         attr-for-selected="name"
     >
         <template is="dom-repeat" id="repeat" items="[[items]]" filter="{{filter}}">
-          <paper-radio-button name="[[valueAccessor(item, valuePath)]]">[[labelAccessor(item.*, labelPath)]]</paper-radio-button>
+          <paper-checkbox name="[[valueAccessor(item, valuePath)]]">[[labelAccessor(item.*, labelPath)]]</paper-checkbox>
         </template>
-    </paper-radio-group>
-    <content></content>
+      </iron-selector>
+      <content></content>
     </paper-input-wrapper>
   </template>
   <script>
   Polymer({
-    is: 'paper-radio-group-items',
+    is: 'paper-checkbox-group-items',
 
     behaviors: [
      Polymer.behaviors.paperInputItems    

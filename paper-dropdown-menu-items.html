@@ -29,8 +29,25 @@ Example:
       display: block;
     }
 
+    paper-dropdown-menu {
+      width: 100%;
+    }
+
     </style>
-    <paper-dropdown-menu id="selector" selected-item="[[value]]" label="[[label]]" readonly="[[readonly]]" placeholder="[[placeholder]]" error-message="[[errorMessage]]" opened="[[opened]]" no-label-float always-float-label="[[alwaysFloatLabel]]" no-animations="[[noAnimations]]" horizontal-align="[[horizontalAlign]]" vertical-align="[[verticalAlign]]">
+    <paper-dropdown-menu 
+      id="selector" 
+      selected-item-label="{{selectedItemLabel}}"
+      selected-item="[[value]]" 
+      label="[[label]]" 
+      readonly="[[readonly]]" 
+      placeholder="[[placeholder]]" 
+      error-message="[[errorMessage]]" 
+      opened="[[opened]]" 
+      no-label-float="[[noLabelFloat]]"
+      always-float-label="[[alwaysFloatLabel]]" 
+      no-animations="[[noAnimations]]" 
+      horizontal-align="[[horizontalAlign]]" 
+      vertical-align="[[verticalAlign]]">
       <paper-listbox class="dropdown-content" selected="{{value}}" attr-for-selected="name">
         <template is="dom-repeat" id="repeat" items="{{items}}" filter="[[filter]]" observe="[[observe]]">
           <paper-item name="[[valueAccessor(item, valuePath)]]">[[labelAccessor(item.*, labelPath)]]</paper-item>
@@ -57,6 +74,11 @@ Example:
         notify: true,
         value: false
       },
+
+      selectedItemLabel: {
+        type: String,
+        notify: true
+      }
     }
 
   });

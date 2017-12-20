@@ -10,6 +10,7 @@
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../paper-dropdown-menu-items.html">
   <link rel="import" href="../paper-radio-group-items.html">
+  <link rel="import" href="../paper-checkbox-group-items.html">
   <style is="custom-style" include="demo-pages-shared-styles">
 
   </style>
@@ -29,6 +30,8 @@
           </paper-dropdown-menu-items>
           <paper-radio-group-items id="radio" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
           </paper-radio-group-items>
+          <paper-checkbox-group-items id="checkbox" label="choose Division (multi)" value="{{values}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
+          </paper-checkbox-group-items>
         </template>
       </template>
     </demo-snippet>
@@ -48,7 +51,9 @@
       key: 'third'
     }];
     
-    app.$.dropdown.items = app.$.radio.items = items;
+    app.values=['second'];
+
+    app.$.dropdown.items = app.$.radio.items =  app.$.checkbox.items = items;
     app.$.dropdown.value = 'second';
   });
   </script>
