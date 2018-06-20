@@ -68,6 +68,7 @@ Polymer.behaviors.paperInputItemsImpl = {
       value: function() {
         var me = this;
         return function(item, path) {
+          // console.info('label', item, path);
           item = item.base || item;
           return me.get(path, item);
         };

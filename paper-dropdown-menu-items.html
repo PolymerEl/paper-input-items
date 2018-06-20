@@ -50,7 +50,7 @@ Example:
       horizontal-align="[[horizontalAlign]]" 
       vertical-align="[[verticalAlign]]">
       <paper-listbox class="dropdown-content" selected="{{value}}" attr-for-selected="name">
-        <template is="dom-repeat" id="repeat" items="{{items}}" filter="[[filter]]" observe="[[observe]]">
+        <template is="dom-repeat" id="repeat" items="[[items]]" filter="[[filter]]" observe="[[observe]]">
           <paper-item name="[[valueAccessor(item, valuePath)]]">[[labelAccessor(item.*, labelPath)]]</paper-item>
         </template>
       </paper-listbox>
