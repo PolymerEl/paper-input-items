@@ -8,11 +8,12 @@
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <!-- Ensure Web Animations polyfill is loaded since neon-animation 2.0 doesn't import it -->
+  <link rel="import" href="../../neon-animation/web-animations.html">
   <link rel="import" href="../paper-dropdown-menu-items.html">
   <link rel="import" href="../paper-radio-group-items.html">
   <link rel="import" href="../paper-checkbox-group-items.html">
   <style is="custom-style" include="demo-pages-shared-styles">
-
   </style>
 </head>
 
@@ -23,40 +24,42 @@
     <p>Use firebase collection items as paper-dropdown-menu options</p>
     <demo-snippet class="centered-demo">
       <template>
-        <template is="dom-bind" id="app">
-          <lookup-accessor path="label" accessor="{{labelAccessor}}"></lookup-accessor>
-          <lookup-accessor path="key" accessor="{{valueAccessor}}"></lookup-accessor>
-          <paper-dropdown-menu-items id="dropdown" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
-          </paper-dropdown-menu-items>
-          <paper-radio-group-items id="radio" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
-          </paper-radio-group-items>
-          <paper-checkbox-group-items id="checkbox" label="choose Division (multi)" value="{{values}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]" >
-          </paper-checkbox-group-items>
-        </template>
+        <dom-bind id="app">
+          <template>
+            <lookup-accessor path="label" accessor="{{labelAccessor}}"></lookup-accessor>
+            <lookup-accessor path="key" accessor="{{valueAccessor}}"></lookup-accessor>
+            <paper-dropdown-menu-items id="dropdown" label="choose Division" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]">
+            </paper-dropdown-menu-items>
+            <paper-radio-group-items id="radio" label="choose Division" placeholder="placeholder" value="{{value}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]">
+            </paper-radio-group-items>
+            <paper-checkbox-group-items id="checkbox" label="choose Division (multi)" value="{{values}}" label-accessor="[[labelAccessor]]" value-accessor="[[valueAccessor]]">
+            </paper-checkbox-group-items>
+          </template>
+        </dom-bind>
       </template>
+      <script>
+      window.addEventListener('WebComponentsReady', function() {
+        app = document.querySelector('#app');
+
+        var items = [{
+          label: 'first',
+          key: 'first'
+        }, {
+          label: 'second',
+          key: 'second'
+        }, {
+          label: 'third',
+          key: 'third'
+        }];
+
+        app.values = ['second'];
+
+        app.$.dropdown.items = app.$.radio.items = app.$.checkbox.items = items;
+        app.$.dropdown.value = 'second';
+      });
+      </script>
     </demo-snippet>
   </div>
-  <script>
-  window.addEventListener('WebComponentsReady', function() {
-    app = document.querySelector('#app');
-
-    var items = [{
-      label: 'first',
-      key: 'first'
-    }, {
-      label: 'second',
-      key: 'second'
-    }, {
-      label: 'third',
-      key: 'third'
-    }];
-    
-    app.values=['second'];
-
-    app.$.dropdown.items = app.$.radio.items =  app.$.checkbox.items = items;
-    app.$.dropdown.value = 'second';
-  });
-  </script>
 </body>
 
 </html>

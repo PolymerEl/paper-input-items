@@ -27,8 +27,7 @@
       },
 
       subPath: {
-        type: Boolean,
-        value: false
+        type: Boolean
       }
 
     },
@@ -38,6 +37,7 @@
     ],
 
     _observePath: function(path, subPath) {
+      if (!path) { return; }
       var split = path.split('.');
 
       var fn = subPath ? function(item, k) {
@@ -56,13 +56,6 @@
       //we keep the path so that we can check how the accessor function is being built (e.g. when we have a change in data table)
       fn.path = split;
       this.set('accessor', fn);
-
-      // if (path) {
-      //   if (subPath) {
-      //     return this.set('accessor', new Function('item', 'k', 'return item.' + path + '[k];'));
-      //   }
-      //   this.set('accessor', new Function('item', 'return item.' + path + ';'));
-      // }
     }
 
   });

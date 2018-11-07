@@ -26,12 +26,8 @@ Example:
     <style>
     :host {
       display: block;
-      /*box-sizing: border-box;*/
     }
-/*    #filterCt {
-      color: var(--default-primary-color);
-      padding: 2px 8;
-    }*/
+
     </style>
     
     <paper-input-wrapper
@@ -39,7 +35,6 @@ Example:
         error-message="[[errorMessage]]"
         placeholder="[[placeholder]]"
         no-label-float="[[noLabelFloat]]"
-        always-float-label="[[alwaysFloatLabel]]"
         >
     <paper-radio-group
         id="selector"
@@ -63,7 +58,6 @@ Example:
 
     behaviors: [
      Polymer.behaviors.paperInputItems    
-      // Polymer.paperInputBehaviors.items
     ]
 
   });

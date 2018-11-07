@@ -96,13 +96,9 @@ Polymer.behaviors.paperInputItemsImpl = {
 
   },
 
-  observers: [
-    // '__observeAccessor(labelAccessor, labelAccessor.changed)',
-    // '__observeAccessor(valueAccessor, valueAccessor.changed)'
-  ],
 
-  listeners: {
-    'item-label-changed': '__onLabelChanged'
+  ready() {
+    this.addEventListener('item-label-changed', this.__onLabelChanged);
   },
 
   /* 
@@ -133,33 +129,9 @@ Polymer.behaviors.paperInputItemsImpl = {
         //   this._pathEffector('value', this.value)
         //   // this.notifyPath('value', this.value, true);
         // }
-      }, 100);
+      }, 10);
     }
-  },
-
-  // __observeLabelPath: function(path, old) {
-  //   if (path) {
-  //     this.labelAccessor = this.__computeAccessor(path);
-  //     // this.set('labelAccessor.changed',!this.labelAccessor.changed);
-  //   }
-  // },
-
-  // __observeValuePath: function(path, old) {
-  //   if (path) {
-  //     this.valueAccessor = this.__computeAccessor(path);
-  //     // this.set('valueAccessor.changed',!this.valueAccessor.changed);
-  //   }
-  // },
-
-  // __computeAccessor: function(path) {
-  //   if (path) {
-  //     var me = this;
-  //     return function(item) {
-  //       item = item.base || item;
-  //       return me.get(path, item);
-  //     };
-  //   }
-  // }
+  }
 
 };
 
