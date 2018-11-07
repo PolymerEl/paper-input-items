@@ -15,7 +15,7 @@
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
-    "paper-item": "PolymerElements/paper-item#^2.0."
+    "paper-item": "PolymerElements/paper-item#^2.0.0"
   },
   "keywords": [
     "web-component",
